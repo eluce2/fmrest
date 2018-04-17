@@ -1,7 +1,7 @@
 
-import fmAPI
+import fmDataAPI
 
-fm = fmAPI.DataAPIv1('filemaker.company.com')
+fm = fmDataAPI.DataAPIv1('filemaker.company.com')
 
 fm.authenticate('solutionName', 'username', 'password')
 if fm.errorCode != 0:

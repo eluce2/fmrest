@@ -1,0 +1,9 @@
+setup.cfg
+setup.py
+fmDataAPI/__init__.py
+fmDataAPI/fmDataAPI.py
+fmDataAPI.egg-info/PKG-INFO
+fmDataAPI.egg-info/SOURCES.txt
+fmDataAPI.egg-info/dependency_links.txt
+fmDataAPI.egg-info/requires.txt
+fmDataAPI.egg-info/top_level.txt

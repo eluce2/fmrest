@@ -2,16 +2,16 @@
 
 ###### A python helper library to interact with the FileMaker Data API
 
-This module is compatible with FileMaker Server 17 which uses version 1 of the FileMaker Data API. It includes a paging function that automatically limits the number of records returned from FileMaker. It also makes it much easier to manage the tokenization required by the FileMaker API, allowing you to focus on the requests to create or get records from FileMaker.
+This module is compatible with FileMaker Server 17 which uses version 1 of the FileMaker Data API. It includes a paging function that automatically limits the number of records returned from FileMaker within a single API call. It also makes it much easier to manage the tokenization required by the FileMaker API, allowing you to focus on the requests to create or get records from FileMaker.
 
 ## Getting Started
 
 ### Installation
 
-fmAPI can be installed using pip, or by downloading the source code on GitHub.
+fmDataAPI can be installed using pip, or by downloading the source code on GitHub.
 
 ```
-pip install fmAPI
+pip install fmDataAPI
 ```
 
 The module requires that the “json” and “requests” module are also installed, and will be installed when you run this command if needed.
@@ -21,7 +21,7 @@ The module requires that the “json” and “requests” module are also insta
 Initiate an instance of the API with your server name. Do not include “https://“ as this is assumed and required by FileMaker Server.
 
 ```
-import fmAPI
+import fmDataAPI
 
 fm = fmAPI.DataAPIv1('filemaker.company.com')
 ```
@@ -99,6 +99,7 @@ fm.get_record('layoutName', 'recordId')
 ```
 
 **Upload to a Container Field**
+
 Not yet supported
 
 **Find Records**
@@ -112,5 +113,5 @@ fm.find_records('layoutName', data)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
