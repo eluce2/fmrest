@@ -1,0 +1,10 @@
+setup.cfg
+setup.py
+fmrest/__init__.py
+fmrest.egg-info/PKG-INFO
+fmrest.egg-info/SOURCES.txt
+fmrest.egg-info/dependency_links.txt
+fmrest.egg-info/requires.txt
+fmrest.egg-info/top_level.txt
+fmrest/dataAPI/__init__.py
+fmrest/dataAPI/fmDataAPI.py

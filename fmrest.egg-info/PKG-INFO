@@ -1,0 +1,16 @@
+Metadata-Version: 1.1
+Name: fmrest
+Version: 1.0.4
+Summary: a Python library for interacting with the FileMaker REST APIs
+Home-page: https://github.com/eluce2/fmrest
+Author: Eric Luce
+Author-email: eluce@huntington.edu
+License: MIT
+Description: UNKNOWN
+Keywords: filemaker helper rest api fmrest fmapi
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Utilities

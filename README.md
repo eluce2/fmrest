@@ -13,7 +13,7 @@ If enough people are interested, this library can be expanded to also include th
 fmrest can be installed using pip, or by downloading the source code on GitHub.
 
 ```
-pip install filemakerAPI
+pip install fmrest
 ```
 
 ## Usage
