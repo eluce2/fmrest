@@ -21,7 +21,7 @@ pip install fmrest
 Initiate an instance of the API with your server name. Do not include “https://“ as this is assumed by the script and required by FileMaker Server.
 
 ```
-from filemakerAPI import dataAPI
+from fmrest import dataAPI
 
 fm = dataAPI.DataAPIv1('filemaker.company.com')
 ```
