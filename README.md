@@ -10,7 +10,7 @@ If enough people are interested, this library can be expanded to also include th
 
 ### Installation
 
-filemakerAPI can be installed using pip, or by downloading the source code on GitHub.
+fmrest can be installed using pip, or by downloading the source code on GitHub.
 
 ```
 pip install filemakerAPI

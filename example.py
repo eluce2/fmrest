@@ -1,4 +1,4 @@
-from filemakerAPI import dataAPI
+from fmrest import dataAPI
 
 fm = dataAPI.DataAPIv1('filemaker.company.com')
 

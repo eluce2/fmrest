@@ -68,16 +68,16 @@ class DataAPIv1:
 
     def _page_recursive(self, layout, my_range, offset):
         args = {}
-        args['range'] = str(my_range)
-        args['offset'] =  str(offset)
+        args['_limit'] = str(my_range)
+        args['_offset'] =  str(offset)
         response = self._request('record', 'get', layout, query_params=args)
         if self.errorCode != 0:
             print("Error getting records, code: " + str(self.errorCode) + ', Message: ' +
                     self.errorMessage + "\n")
-        data_one = response['data']
+        data_one = response['response']['data']
         for item in data_one:
             self._return_data.append(item)
-        count = len(response['data'])
+        count = len(response['response']['data'])
         if count == my_range:
             # there are probably more records do another request to see
             # add current offset to range to get the new offset value
@@ -96,11 +96,10 @@ class DataAPIv1:
                     }
         return response
 
-
     def _request(self, method, verb, layout='', record_id='', query_params={}, data=None, auth=None, containerURL=''):
         """ Makes a Filemaker API call and returns the response as an array."""
 
-        if self.solution = None:
+        if not self.solution:
             self.errorCode = -1
             self.errorMessage = "Solution name missing. Please re-authenticate."
             return self._build_custom_response()
@@ -139,6 +138,9 @@ class DataAPIv1:
             if containerURL != '':
                 # needed for uploading into container fields
                 url += "/containers/" + containerURL
+
+        self.data_sent = data_json
+        self.url = url
 
         req = ''
         # complete the request
