@@ -1,4 +1,4 @@
-# filemakerAPI
+# fmrest
 
 ###### A python helper library to interact with the FileMaker Data API
 

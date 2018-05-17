@@ -7,4 +7,3 @@ fmrest.egg-info/dependency_links.txt
 fmrest.egg-info/requires.txt
 fmrest.egg-info/top_level.txt
 fmrest/dataAPI/__init__.py
-fmrest/dataAPI/fmDataAPI.py
