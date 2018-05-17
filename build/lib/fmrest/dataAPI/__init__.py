@@ -35,8 +35,7 @@ class DataAPIv1:
     def get_records(self, layout, args={}):
         my_range = 100
         # adding a recursive function to handle paging with the range limit set at 100
-        self._page_recursive(layout, my_range, 1)
-        return self._return_data
+        return self._page_recursive(layout, my_range, 1)
 
     def get_record(self, layout, record_id, args={}):
         # get a single record by it's record ID
@@ -81,11 +80,20 @@ class DataAPIv1:
         if count == my_range:
             # there are probably more records do another request to see
             # add current offset to range to get the new offset value
-             self._page_recursive(layout, my_range, offset + my_range)
+            self._page_recursive(layout, my_range, offset + my_range)
         else:
             # when count no longer equals range we know we have reached the end so exit
             # function
-            return
+            response = {
+                'response': {
+                    'data': self._return_data
+                },
+                'messages': [
+                        {'code': str(self.errorCode),
+                         'message': self.errorMessage}
+                    ]
+            }
+            return response
 
     def _build_custom_response(self):
         response = {'response': {},
