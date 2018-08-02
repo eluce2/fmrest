@@ -62,12 +62,8 @@ class DataAPIv1:
         return self._request('globals', 'patch', data=data)
 
     def container_upload(self, layout, record_id, field_name, file, field_repetition=1):
-        containerURL = str(field_name) + "/" + str(field_repetition)
-        response = self._request('container', 'post', layout, record_id=record_id, containerURL=containerURL, file=file)
-
-        # f.close()
-
-        return response
+        url = str(field_name) + "/" + str(field_repetition)
+        return self._request('container', 'post', layout, record_id=record_id, containerURL=url, file=file)
 
     def _page_recursive(self, layout, my_range, offset):
         args = {}
@@ -122,7 +118,7 @@ class DataAPIv1:
             headers = {"Content-Type": "application/json"}
         else:
             if method == "container":
-                headers = {"Authorization": "Bearer " + self._api_key, "Content-Type": "multipart/form-data"}
+                headers = {"Authorization": "Bearer " + self._api_key}
             elif verb == 'patch' or verb == 'post':
                 headers = {"Authorization": "Bearer " + self._api_key, "Content-Type": "application/json"}
             else:
@@ -165,7 +161,6 @@ class DataAPIv1:
                 if auth:
                     req = requests.post(url, data=data_json, headers=headers, auth=auth)
                 elif method == "container":
-                    print(type(file))
                     req = requests.post(url, files={'upload': file}, headers=headers)
                 else:
                     req = requests.post(url, data=data_json, headers=headers)
