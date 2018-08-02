@@ -45,4 +45,7 @@ data = { "globalFields": {
 }
 fm.set_globals(data)
 
+with open('file.png', 'rb') as file:
+    fm.container_upload('layoutName', 'recordId', 'container_field_name', file)
+
 fm.logout('solutionName')

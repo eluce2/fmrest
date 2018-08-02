@@ -100,7 +100,10 @@ fm.get_record('layoutName', 'recordId')
 
 **Upload to a Container Field**
 
-Not yet tested
+```
+with open('file.png', 'rb') as file:
+    fm.container_upload('layoutName', 'recordId', 'container_field_name', file)
+```
 
 **Find Records**
 ```

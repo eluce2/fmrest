@@ -61,9 +61,9 @@ class DataAPIv1:
         '''Set a global fields in a solution; doesn't need layout context'''
         return self._request('globals', 'patch', data=data)
 
-    def container_upload(self, layout, record_id, field_name, field_repetition, data):
-        containerURL = str(field_name) + "/" + str(field_repetition)
-        return self._request('container', 'post', layout, record_id=record_id, containerURL=containerURL, data=data)
+    def container_upload(self, layout, record_id, field_name, file, field_repetition=1):
+        url = str(field_name) + "/" + str(field_repetition)
+        return self._request('container', 'post', layout, record_id=record_id, containerURL=url, file=file)
 
     def _page_recursive(self, layout, my_range, offset):
         args = {}
@@ -104,7 +104,7 @@ class DataAPIv1:
                     }
         return response
 
-    def _request(self, method, verb, layout='', record_id='', query_params={}, data=None, auth=None, containerURL=''):
+    def _request(self, method, verb, layout='', record_id='', query_params={}, data=None, auth=None, containerURL='', file=''):
         """ Makes a Filemaker API call and returns the response as an array."""
 
         if not self.solution:
@@ -118,7 +118,7 @@ class DataAPIv1:
             headers = {"Content-Type": "application/json"}
         else:
             if method == "container":
-                headers = {"Authorization": "Bearer " + self._api_key, "Content-Type": "multipart/form-data"}
+                headers = {"Authorization": "Bearer " + self._api_key}
             elif verb == 'patch' or verb == 'post':
                 headers = {"Authorization": "Bearer " + self._api_key, "Content-Type": "application/json"}
             else:
@@ -150,19 +150,28 @@ class DataAPIv1:
         self.data_sent = data_json
         self.url = url
 
-        req = ''
-        # complete the request
-        if verb == "get":
-            req = requests.get(url, headers=headers, params=query_params)
-        elif verb == "post":
-            if auth:
-                req = requests.post(url, data=data_json, headers=headers, auth=auth)
-            else:
-                req = requests.post(url, data=data_json, headers=headers)
-        elif verb == "patch":
-            req = requests.patch(url, data=data_json, headers=headers)
-        elif verb == "delete":
-            req = requests.delete(url, headers=headers)
+        test_url = 'https://webhook.site/b540812c-f488-482e-a153-d22e8c6fddb4'
+
+        try:
+            req = ''
+            # complete the request
+            if verb == "get":
+                req = requests.get(url, headers=headers, params=query_params)
+            elif verb == "post":
+                if auth:
+                    req = requests.post(url, data=data_json, headers=headers, auth=auth)
+                elif method == "container":
+                    req = requests.post(url, files={'upload': file}, headers=headers)
+                else:
+                    req = requests.post(url, data=data_json, headers=headers)
+            elif verb == "patch":
+                req = requests.patch(url, data=data_json, headers=headers)
+            elif verb == "delete":
+                req = requests.delete(url, headers=headers)
+        except Exception as e:
+            self.errorCode = -3
+            self.errorMessage = "Could not connect to server: " + str(req) + "\n" + str(e)
+            return self._build_custom_response()
 
         try:
             req = req.json()
