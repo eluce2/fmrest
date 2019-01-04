@@ -93,13 +93,17 @@ class DataAPIv1:
             # function
             return
 
-    def _build_custom_response(self):
+    def _build_custom_response(self, data=None):
         response = {'response': {},
                     'messages': [
                         {'code': str(self.errorCode),
                          'message': self.errorMessage}
                     ]
                     }
+
+        if data:
+            response['response']['data'] = data
+
         return response
 
     def _request(self, method, verb, layout='', record_id='', query_params={}, data=None, auth=None, containerURL='', file=''):
