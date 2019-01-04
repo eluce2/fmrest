@@ -1,3 +1,9 @@
+'''
+This class handles DATA API requests to a FileMaker server.
+v1 of the DATA API is a feature of FileMaker Server 17 (this class is not compatible with FileMaker Server 16 or earlier)
+Special Thanks to Andrew Wolfe for the initial build of this class.
+'''
+
 import requests, json
 from requests.auth import HTTPBasicAuth
 
@@ -35,7 +41,8 @@ class DataAPIv1:
     def get_records(self, layout, args={}):
         my_range = 100
         # adding a recursive function to handle paging with the range limit set at 100
-        return self._page_recursive(layout, my_range, 1)
+        self._page_recursive(layout, my_range, 1)
+        return self._build_custom_response(data=self._return_data)
 
     def get_record(self, layout, record_id, args={}):
         # get a single record by it's record ID
@@ -84,16 +91,7 @@ class DataAPIv1:
         else:
             # when count no longer equals range we know we have reached the end so exit
             # function
-            response = {
-                'response': {
-                    'data': self._return_data
-                },
-                'messages': [
-                        {'code': str(self.errorCode),
-                         'message': self.errorMessage}
-                    ]
-            }
-            return response
+            return
 
     def _build_custom_response(self):
         response = {'response': {},
