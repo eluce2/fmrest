@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: fmrest
-Version: 1.1
+Version: 1.1.1
 Summary: a Python library for interacting with the FileMaker REST APIs
 Home-page: https://github.com/eluce2/fmrest
 Author: Eric Luce
