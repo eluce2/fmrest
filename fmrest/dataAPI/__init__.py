@@ -6,17 +6,21 @@ Special Thanks to Andrew Wolfe for the initial build of this class.
 
 import requests, json
 from requests.auth import HTTPBasicAuth
-
+import urllib3
 
 class DataAPIv1:
 
-    def __init__(self, server):
+    def __init__(self, server, secure=True):
         self._api_url = 'https://' + server + '/fmi/data/v1/databases'
         self._return_data = []
         self.errorCode = 0
         self.errorMessage = 'OK'
         self._api_key = None
         self.solution = None
+        self.secure = secure
+
+        if not self.secure:
+            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
     def authenticate(self, solution, username, password):
         self.solution = solution
@@ -158,18 +162,21 @@ class DataAPIv1:
             req = ''
             # complete the request
             if verb == "get":
-                req = requests.get(url, headers=headers, params=query_params)
+                req = requests.get(url, headers=headers, params=query_params,
+                                   verify=self.secure)
             elif verb == "post":
                 if auth:
-                    req = requests.post(url, data=data_json, headers=headers, auth=auth)
+                    req = requests.post(url, data=data_json, headers=headers, auth=auth, verify=self.secure)
                 elif method == "container":
-                    req = requests.post(url, files={'upload': file}, headers=headers)
+                    req = requests.post(url, files={'upload': file}, headers=headers, verify=self.secure)
                 else:
-                    req = requests.post(url, data=data_json, headers=headers)
+                    req = requests.post(url, data=data_json, headers=headers,
+                                        verify=self.secure)
             elif verb == "patch":
-                req = requests.patch(url, data=data_json, headers=headers)
+                req = requests.patch(url, data=data_json, headers=headers,
+                                     verify=self.secure)
             elif verb == "delete":
-                req = requests.delete(url, headers=headers)
+                req = requests.delete(url, headers=headers, verify=self.secure)
         except Exception as e:
             self.errorCode = -3
             self.errorMessage = "Could not connect to server: " + str(req) + "\n" + str(e)
@@ -184,4 +191,3 @@ class DataAPIv1:
             self.errorCode = -2
             self.errorMessage = "Unexpected response from server: " + str(req)
             return self._build_custom_response()
-
